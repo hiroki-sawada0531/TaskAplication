@@ -28,6 +28,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function statuses()
+    {
+        return $this->hasMany(Status::class)->orderBy('order');
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
