@@ -38,4 +38,18 @@ class TaskController extends Controller
 
         return $request->user()->statuses()->with('tasks')->get();
     }
+
+    /**
+     * タスクを削除
+     *
+     * @param int $taskId
+     * @return int
+     */
+    public function destroy(int $taskId)
+    {
+        $del_task = Task::find($taskId);
+        $del_task->delete();
+
+        return (200);
+    }
 }
