@@ -64,6 +64,7 @@
                                                 <span class="block mb-2 text-xl text-gray-900">
                                                     {{ task.title }}
                                                 </span>
+                                            <!--追加-->
                                                 <div>
                                                     <button aria-label="Delete task"
                                                             class="p-1 focus:outline-none focus:shadow-outline text-red-500 hover:text-red-600"
@@ -72,24 +73,27 @@
                                                         <Trash2Icon/>
                                                     </button>
                                                 </div>
+
                                             </div>
                                             <p class="text-gray-700">
                                                 {{ task.description }}
                                             </p>
-
                                         </div>
-                                        <!-- ./Tasks -->
                                     </transition-group>
                                 </draggable>
+                                <!-- ./Tasks -->
 
                                 <!-- No Tasks -->
 </template>
 <script>
 import AddTaskForm from "./AddTaskForm"; //コンポーネントをインポートする
 import draggable from "vuedraggable";
+import { CreditCardIcon,Trash2Icon } from "vue-feather-icons";
 
 export default {
-  components: {
+components: {
+    CreditCardIcon,
+    Trash2Icon,
     AddTaskForm,
     draggable,
   }, // 登録
@@ -109,6 +113,25 @@ export default {
     this.statuses = JSON.parse(JSON.stringify(this.initialData));
   },
   methods: {
+      // 追加
+        onDelete (taskId, statusId) {
+            const statusIndex = this.statuses.findIndex(
+                status => status.id === statusId
+            );
+            const taskIndex = this.statuses[statusIndex].tasks.findIndex(
+                id => taskId
+            );
+            if (confirm('タスクを削除しますか？')) {
+                axios
+                    .delete("/tasks/" + taskId, taskId)
+                    .then(res => {
+                        this.statuses[statusIndex].tasks.splice(taskIndex, 1);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        },
     // statusIdを設定し、フォームを表示
     openAddTaskForm(statusId) {
       this.newTaskForStatus = statusId;
