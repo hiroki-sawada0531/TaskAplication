@@ -6,12 +6,23 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    // ここから
-    public function index()
+    /**
+     * タスクカードを追加
+     *
+     * @param Request $request
+     * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request)
     {
-        $tasks = auth()->user()->statuses()->with('tasks')->get();
+        $this->validate($request, [
+            'title' => ['required', 'string', 'max:56'],
+            'description' => ['required', 'string'],
+            'status_id' => ['required', 'exists:statuses,id']
+        ]);
 
-        return view('tasks.index', compact('tasks'));
+        return $request->user()
+            ->tasks()
+            ->create($request->only('title', 'description', 'status_id'));
     }
-    // ここまで
 }
