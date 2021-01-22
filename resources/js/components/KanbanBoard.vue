@@ -37,30 +37,62 @@
                     <!-- あとで、ここにタスク追加フォームを入れます-->
 
                     <AddTaskForm
-    v-if="newTaskForStatus === status.id"
-    :status-id="status.id"
-    v-on:task-added="handleTaskAdded"
-    v-on:task-canceled="closeAddTaskForm"
-  />
-<div
-    v-show="!status.tasks.length && newTaskForStatus !== status.id"
-    class="flex-1 p-4 flex flex-col items-center justify-center"
-  >
-    <span class="text-gray-600">No tasks yet</span>
-    <button
-      class="mt-1 text-sm text-orange-600 hover:underline"
-      @click="openAddTaskForm(status.id)"
-    >
-      Add one
-    </button>
-  </div>
-  <!-- ./No Tasks -->
+                                    v-if="newTaskForStatus === status.id"
+                                    :status-id="status.id"
+                                    v-on:task-added="handleTaskAdded"
+                                    v-on:task-canceled="closeAddTaskForm"
+                                />
+                                <!-- ./AddTaskForm -->
+
+                                <!-- Tasks -->
+                                <draggable
+                                    class="flex-1 overflow-hidden"
+                                    v-model="status.tasks"
+                                    v-bind="taskDragOptions"
+                                    @end="handleTaskMoved"
+                                >
+                                    <transition-group
+                                        class="flex-1 flex flex-col h-full overflow-x-hidden overflow-y-auto rounded shadow-xs"
+                                        tag="div"
+                                    >
+                                        <div
+                                            v-for="task in status.tasks"
+                                            :key="task.id"
+                                            class="mb-3 p-4 flex flex-col bg-white rounded-md shadow transform hover:shadow-md cursor-pointer"
+                                        >
+                                            <div class="flex justify-between">
+                                                <span class="block mb-2 text-xl text-gray-900">
+                                                    {{ task.title }}
+                                                </span>
+                                                <div>
+                                                    <button aria-label="Delete task"
+                                                            class="p-1 focus:outline-none focus:shadow-outline text-red-500 hover:text-red-600"
+                                                            @click="onDelete(task.id, status.id)"
+                                                    >
+                                                        <Trash2Icon/>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="text-gray-700">
+                                                {{ task.description }}
+                                            </p>
+
+                                        </div>
+                                        <!-- ./Tasks -->
+                                    </transition-group>
+                                </draggable>
+
+                                <!-- No Tasks -->
 </template>
 <script>
 import AddTaskForm from "./AddTaskForm"; //コンポーネントをインポートする
+import draggable from "vuedraggable";
 
 export default {
-  components: { AddTaskForm }, // 登録
+  components: {
+    AddTaskForm,
+    draggable,
+  }, // 登録
 
   props: {
     initialData: Array,
