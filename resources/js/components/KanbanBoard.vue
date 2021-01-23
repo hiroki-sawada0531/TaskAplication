@@ -40,7 +40,8 @@
                     >
                         <div class="rounded-md shadow-md overflow-hidden status">
                             <div class="p-3 flex justify-between items-baseline bg-blue-800 ">
-                                <h4 class="font-medium text-white">
+                                <!-- <h4 class="font-medium text-white"> -->
+                                <h4 class="font-medium">
                                     {{ status.title }}
                                 </h4>
                                 <button
@@ -133,18 +134,19 @@
 
 <script>
 import AddTaskForm from "./AddTaskForm";
-// import AddStatusModal from "./AddStatusModal";
+import AddStatusModal from "./AddStatusModal";
 import draggable from "vuedraggable";
 import { CreditCardIcon, Trash2Icon } from "vue-feather-icons";
 
 export default {
+    name: 'KanbanBoard',
     components: {
         draggable,
         CreditCardIcon,
         // EditIcon,
         Trash2Icon,
         AddTaskForm,
-        // AddStatusModal,
+        AddStatusModal,
     },
     props: {
         initialData: Array

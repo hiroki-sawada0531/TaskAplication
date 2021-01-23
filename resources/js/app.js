@@ -5,11 +5,15 @@
  */
 
 require("./bootstrap");
+import KanbanBoard from "./components/KanbanBoard.vue";
 
 window.Vue = require("vue");
 
 const app = new Vue({
     el: '#app',
+    components: {
+        'kanban-board': KanbanBoard,
+    },
 });
 
 /**
