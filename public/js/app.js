@@ -57248,8 +57248,22 @@ var render = function() {
               }
             },
             [_vm._v("\n                Add Status ＋\n            ")]
-          )
-        ]
+          ),
+          _vm._v(" "),
+          _vm.showModal
+            ? _c("AddStatusModal", {
+                attrs: { maxOrderNo: _vm.statuses.length },
+                on: {
+                  close: function($event) {
+                    _vm.showModal = false
+                  },
+                  "status-added": _vm.handleStatusAdded,
+                  "status-canceled": _vm.closeStatusModal
+                }
+              })
+            : _vm._e()
+        ],
+        1
       )
     ]),
     _vm._v(" "),

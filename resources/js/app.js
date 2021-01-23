@@ -8,6 +8,10 @@ require("./bootstrap");
 
 window.Vue = require("vue");
 
+const app = new Vue({
+    el: '#app',
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,7 +31,3 @@ Vue.component("kanban-board", require("./components/KanbanBoard.vue").default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-const app = new Vue({
-    el: '#app',
-});
