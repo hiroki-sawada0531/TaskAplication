@@ -133,7 +133,7 @@
 
 <script>
 import AddTaskForm from "./AddTaskForm";
-import AddStatusModal from "./AddStatusModal";
+// import AddStatusModal from "./AddStatusModal";
 import draggable from "vuedraggable";
 import { CreditCardIcon, Trash2Icon } from "vue-feather-icons";
 
@@ -141,10 +141,10 @@ export default {
     components: {
         draggable,
         CreditCardIcon,
-        EditIcon,
+        // EditIcon,
         Trash2Icon,
         AddTaskForm,
-        AddStatusModal,
+        // AddStatusModal,
     },
     props: {
         initialData: Array
