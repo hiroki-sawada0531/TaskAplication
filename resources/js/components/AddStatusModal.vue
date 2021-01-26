@@ -70,7 +70,7 @@ export default {
     methods: {
         handleAddNewStatus () {
             if (!this.newStatus.title) {
-                this.errorMessage = "タイトルは必須です";
+                this.errorMessage = "タイトルが必要です";
                 return;
             }
             axios
